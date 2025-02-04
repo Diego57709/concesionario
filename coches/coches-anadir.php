@@ -9,8 +9,10 @@ include '../header.view.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        .main-container {
+        body { 
             background: linear-gradient(to right, #141E30, #243B55);
+        }
+        .main-container {
             margin-top: 20px;
             display: flex;
             flex-direction: column;

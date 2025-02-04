@@ -98,6 +98,8 @@ session_start();
                             echo "⚠️ Faltan datos por completar.";
                         } elseif ($_GET['error'] == 2) {
                             echo "❌ Usuario o contraseña incorrectos.";
+                        } elseif ($_GET['error'] == 3) {
+                            echo "❌ Usuario no existe.";
                         }
                         ?>
                     </div>
@@ -111,7 +113,7 @@ session_start();
                         <div class="mb-3">
                             <input type="password" name="password" id="password" placeholder="Contraseña" required>
                         </div>
-                        <a href="usuarios/usuarios-anadir.php" style="color:#dc3545;">¿No tienes cuenta?</a><br><br>
+                        <a href="usuarios-anadir.php" style="color:#dc3545;">¿No tienes cuenta?</a><br><br>
                         <input type="submit" value="Iniciar sesión" class="button">
                     </form>
                 </div>

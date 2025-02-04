@@ -16,8 +16,8 @@ $result = mysqli_query($conn, $sql);
     <title>Modificar Usuario</title>
     <style>
         body {
+            background: linear-gradient(to right, #141E30, #243B55);
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
             color: #333;
             margin: 0;
             padding: 0;
@@ -148,7 +148,7 @@ $result = mysqli_query($conn, $sql);
                 </form>
             </div>
             <div class="button-container">
-                <a href="/PracticaConcesionario/usuarios/usuarios-buscar.php" class="button">Volver atrás</a>
+                <a href="/PracticaConcesionario/usuarios/usuarios-modificar.php" class="button">Volver atrás</a>
             </div>
         </div>
     </div>

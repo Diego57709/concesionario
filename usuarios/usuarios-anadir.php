@@ -9,6 +9,9 @@ include '../header.view.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
+        body {
+            background: linear-gradient(to right, #141E30, #243B55);
+        }
         .main-container {
             margin-top: 20px;
             display: flex;
@@ -74,6 +77,19 @@ include '../header.view.php';
             margin-top: 20px;
             font-size: 16px;
         }
+        .radio-group {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-top: 10px;
+            }
+
+            .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            }
+
     </style>
 </head>
 <body>
@@ -81,7 +97,7 @@ include '../header.view.php';
         <div class="content">
             <h1>Página de registro</h1>
             <form action="usuarios-anadir2.php" method="POST">
-                <label for="nombre">Usuario: </label>
+                <label for="nombre">Nombre: </label>
                 <input type="text" id="nombre" name="nombre" required>
                 <label for="password">Contraseña: </label>
                 <input type="password" id="password" name="password" required>
@@ -91,6 +107,17 @@ include '../header.view.php';
                 <input type="text" id="dni" name="dni" required>
                 <label for="saldo">Saldo: </label>
                 <input type="text" id="saldo" name="saldo" required>
+                <label for="accion">¿En qué estás interesado?</label>
+                <div class="radio-group">
+                    <div class="radio-item">
+                        <input type="radio" id="vender" name="accion" value="vendedor" required>
+                        <label for="vender">Vender</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="comprar" name="accion" value="comprador" required>
+                        <label for="comprar">Comprar</label>
+                    </div>
+                </div>
                 <input type="submit" value="Registrarse">
             </form>
             <a href="index.php" class="button">Volver al inicio</a>

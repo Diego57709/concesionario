@@ -8,8 +8,8 @@ if (!isset($_REQUEST['dni']) || !isset($_REQUEST['password'])) {
     exit();
 }
 
-$dni = $_REQUEST['dni'];
-$password = $_REQUEST['password'];
+$dni = mysqli_real_escape_string($conn,$_REQUEST['dni']);
+$password = mysqli_real_escape_string($conn,$_REQUEST['password']);
 
 
 $sql = "SELECT * FROM usuarios WHERE dni = '$dni'";
@@ -25,6 +25,7 @@ if ($result && mysqli_num_rows($result) > 0) {
         $_SESSION['apellidos'] = $row['apellidos'];
         $_SESSION['dni'] = $row['dni'];
         $_SESSION['saldo'] = $row['saldo'];
+        $_SESSION['tipo_usuario'] = $row['tipo_usuario'];
 
         header('Location: ../index.php');
         exit();

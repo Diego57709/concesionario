@@ -9,12 +9,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $apellidos = isset($_REQUEST['apellidos']) ? htmlspecialchars(trim($_REQUEST['apellidos'])) : '';
     $dni = isset($_REQUEST['dni']) ? htmlspecialchars(trim($_REQUEST['dni'])) : '';
     $saldo = isset($_REQUEST['saldo']) ? (float)$_REQUEST['saldo'] : 0.0;
+    $accion = isset($_REQUEST['accion']) ? htmlspecialchars(trim($_REQUEST['accion'])) : '';
     
     $hash = password_hash($password, PASSWORD_DEFAULT);
 
-    $sql = "INSERT INTO usuarios (password, nombre, apellidos, dni, saldo) VALUES ('$hash', '$nombre', '$apellidos', '$dni', $saldo)";
+    $sql = "INSERT INTO usuarios (password, nombre, apellidos, dni, saldo, tipo_usuario) VALUES ('$hash', '$nombre', '$apellidos', '$dni', $saldo, '$accion')";
     }
-
 ?>
 
 <?php
@@ -27,6 +27,9 @@ include '../header.view.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
+        body {
+            background: linear-gradient(to right, #141E30, #243B55);
+        }
         .main-container {
             margin-top: 20px;
             display: flex;
@@ -106,7 +109,9 @@ include '../header.view.php';
                 <a href="../" class="button">Volver atrás</a>
             <?php } else { ?>
                 <h3>Fallo en el registro</h3><h3>Por favor, vuelva a intentarlo</h3>
-                <a href="index.php" class="button">Volver al inicio</a>
+                <?php
+                ?>
+                <a href="../index.php" class="button">Volver al inicio</a>
                 <a href="/PracticaConcesionario/usuarios/usuarios-anadir.php" class="button">Volver atrás</a>
             <?php } ?>
         
