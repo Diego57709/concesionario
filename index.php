@@ -91,8 +91,16 @@ session_start();
 
         <!-- Quick Buttons -->
         <div class="quick-buttons">
+            <?php if (($_SESSION['tipo_usuario']) == "vendedor"):?>
+                <a href='/PracticaConcesionario/alquileres/alquileres-anadir.php' class='button'>Alquilar tu coche</a>
+            <?php endif; ?>
+            <?php if (($_SESSION['tipo_usuario']) == "comprador"):?>
+                <a href='/PracticaConcesionario/alquileres/alquileres-alquilar.php' class='button'>Alquilar un coche</a>
+            <?php endif; ?>
             <a href='/PracticaConcesionario/coches/coches-listar.php' class='button'>📋 Listar Coches</a>
-            <a href='/PracticaConcesionario/usuarios/usuarios-iniciar.php' class='button'>🔑 Iniciar Sesión</a>
+            <?php if (!isset($_SESSION['nombre'])): ?>
+                <a href='/PracticaConcesionario/usuarios/usuarios-iniciar.php' class='button'>🔑 Iniciar Sesión</a>
+            <?php endif; ?>
         </div>
     </div>
 

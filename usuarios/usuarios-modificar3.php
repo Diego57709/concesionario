@@ -4,7 +4,11 @@ include '../header.view.php';
 
 include '../db.php';
 
-$id_usuario = $_REQUEST['id_usuario'];
+if (isset($_REQUEST['id_usuario'])) {
+    $id_usuario = $_REQUEST['id_usuario'];
+} else {
+    $id_usuario = $_SESSION['id_usuario'];
+}
 $sql = "SELECT * FROM usuarios WHERE id_usuario = '$id_usuario'";
 $result = mysqli_query($conn, $sql);
 ?>

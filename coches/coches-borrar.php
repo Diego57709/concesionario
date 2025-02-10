@@ -1,5 +1,17 @@
 <?php
 include '../header.view.php';
+if (!isset($_SESSION['id_usuario']) || !isset($_SESSION['tipo_usuario'])) {
+    header("Location: /PracticaConcesionario/usuarios/usuarios-iniciar.php");
+    exit();
+}
+switch ($_SESSION['tipo_usuario']) {
+    case 'vendedor':
+        header("Location: /PracticaConcesionario/index.php");
+        exit();
+    case 'comprador':
+        header("Location: /PracticaConcesionario/index.php");
+        exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

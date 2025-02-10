@@ -1,16 +1,29 @@
 <?php
 session_start();
+if (!isset($_SESSION['id_usuario']) || !isset($_SESSION['tipo_usuario'])) {
+    header("Location: /PracticaConcesionario/usuarios/usuarios-iniciar.php");
+    exit();
+}
+switch ($_SESSION['tipo_usuario']) {
+    case 'vendedor':
+        header("Location: /PracticaConcesionario/index.php");
+        exit();
+    case 'comprador':
+        header("Location: /PracticaConcesionario/index.php");
+        exit();
+}
 include '../header.view.php';
 $modelo = $_REQUEST['modelo'];
 $marca = $_REQUEST['marca'];
 $color = $_REQUEST['color'];
 $min_precio = isset($_REQUEST['min_precio']) ? $_REQUEST['min_precio'] : 0;
 $max_precio = isset($_REQUEST['max_precio']) ? $_REQUEST['max_precio'] : 0;
+$id_usuario = $_SESSION['id_usuario'];
 
 $alquilado = isset($_REQUEST['alquilado']) ? 1 : 0;
 
 include '../db.php';
-    $sql = "SELECT * FROM coches WHERE 1=1";
+    $sql = "SELECT * FROM coches WHERE 1=1 AND id_usuario = '$id_usuario'";
     
     if ($modelo) {
         $sql.= " AND modelo LIKE '%$modelo%'";

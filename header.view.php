@@ -103,7 +103,7 @@ session_start(); // Iniciar sesión
 </head>
 <body>
   <header>
-    <h1>Hola!</h1>
+    <h1>Hola, <?php echo $nombre = $_SESSION['nombre'] ? $_SESSION['nombre'] : "Invitado";?>!</h1>
     <nav>
       <div class="dropdown">
         <a href="#">Coches</a>
@@ -163,10 +163,18 @@ session_start(); // Iniciar sesión
               <a href="/PracticaConcesionario/usuarios/usuarios-buscar.php">Buscar</a>
               <a href="/PracticaConcesionario/usuarios/usuarios-modificar.php">Modificar</a>
               <a href="/PracticaConcesionario/usuarios/usuarios-borrar.php">Borrar</a>
+            <?php 
+            } elseif ($tipo == 'vendedor') { ?>
+              <a href="/PracticaConcesionario/usuarios/usuarios-modificar3.php">Modificar</a>
+            <?php 
+            } elseif ($tipo == 'comprador') { ?>
+              <a href="/PracticaConcesionario/usuarios/usuarios-modificar3.php">Modificar</a>
+            <?php 
+            } 
+            ?>
             <?php } ?>
             <a href="/PracticaConcesionario/usuarios/usuarios-cerrar.php" class="session-button">Cerrar sesión</a>
           <?php 
-          } 
           ?>
         </div>
       </div>
@@ -191,6 +199,7 @@ session_start(); // Iniciar sesión
             } elseif ($tipo == 'comprador') { ?>
               <a href="/PracticaConcesionario/index.php">Inicio</a>
               <a href="/PracticaConcesionario/alquileres/alquileres-listar.php">Listar</a>
+              <a href="/PracticaConcesionario/alquileres/alquileres-alquilar.php">Alquilar</a>
             <?php 
             } 
             ?>

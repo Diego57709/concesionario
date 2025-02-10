@@ -1,6 +1,7 @@
 <?php
 session_start();
 include '../header.view.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

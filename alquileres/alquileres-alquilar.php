@@ -8,28 +8,26 @@ switch ($_SESSION['tipo_usuario']) {
     case 'vendedor':
         header("Location: /PracticaConcesionario/index.php");
         exit();
-    case 'comprador':
-        header("Location: /PracticaConcesionario/index.php");
-        exit();
 }
 include '../header.view.php';
 
 include '../db.php';
-    $id_usuario = $_REQUEST['id_usuario'];
-    $sql1 = "SELECT nombre FROM usuarios WHERE id_usuario = '$id_usuario'";
-    $result1 = mysqli_query($conn, $sql1);
-    if ($result1 && mysqli_num_rows($result1) > 0) {
-        $row = mysqli_fetch_assoc($result1);
-        $nombre_usuario = $row['nombre'];
-    }
 
+$sql = 
+"SELECT c.id_coche, c.modelo, c.marca, c.precio, c.alquilado, c.foto, c.id_usuario, u.nombre
+FROM coches c
+JOIN usuarios u
+ON c.id_usuario = u.id_usuario";
+
+$result = mysqli_query($conn, $sql);
 ?>
-<!DOCTYPE html> 
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Listado de coches</title>
     <style>
         body {
             background: linear-gradient(to right, #141E30, #243B55);
@@ -54,17 +52,16 @@ include '../db.php';
         .content {
             text-align: center;
             margin-bottom: 20px;
-            justify-content: center;
         }
 
-        .car-container {
+        .alquiler-container {
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
             justify-content: center;
         }
 
-        .car-box {
+        .alquiler-box {
             background-color: #fff;
             border: 1px solid #ddd;
             border-radius: 8px;
@@ -78,19 +75,19 @@ include '../db.php';
             color: #333;
         }
 
-        .car-box img {
+        .alquiler-box img {
             width: 100%;
             height: 180px;
             border-bottom: 1px solid #ddd;
             margin-bottom: 10px;
         }
 
-        .car-box h3 {
+        .alquiler-box h3 {
             margin: 10px 0;
             font-size: 18px;
         }
 
-        .car-box p {
+        .alquiler-box p {
             margin: 5px 0;
             font-size: 14px;
             color: #555;
@@ -113,57 +110,35 @@ include '../db.php';
         .button:hover {
             background-color: #0056b3;
         }
-        .user-container table {
-            text-align: center;
-            display: flex;
-            justify-content: center;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 12px 15px;
-            text-align: center;
-            border: 1px solid white;
-        }
-        th {
-            background-color: #007BFF;
-            color: #fff;
-            text-transform: uppercase;
-            font-size: 14px;
-        }
-        input[type="submit"], 
-        .button {
-            background-color: #007BFF;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-            text-decoration: none;
-        }
-
-        input[type="submit"]:hover, 
-        .button:hover {
-            background-color: #0056b3;
-        }
     </style>
 </head>
 <body>
     <div class="main-container">
         <div class="content">
-            <h1>Usuarios borrado</h1>
-            <div class="user-container">         
-                <form action="usuarios-borrar4.php" method="post">
-                    <h3>¿Está seguro de eliminar al usuario, <?php echo $nombre_usuario?>?</h3>
-                    <input type="text" name="id_usuario" id="id_usuario" value="<?php echo $id_usuario;?>" hidden>
-                    <input type="submit" value="Borrar">
-                </form>
+            <h1>Coches disponibles para alquilar</h1>
+        </div>
+        <div class="alquiler-container">
+            <?php
+            if (mysqli_num_rows($result) > 0) {
+                while($row = mysqli_fetch_assoc($result)) { 
+                    if($row["alquilado"] == 0) { ?>
+                    <div class="alquiler-box">
+                    <img src="/PracticaConcesionario/coches/img/<?php echo $row['foto']?>" alt="Imagen del coche">
+                    <p style="font-size:20px; color:black; text-decoration:underline;"><strong><?php echo $row["marca"] . ' ' . $row["modelo"] ?></strong></p>
+                    <p><strong>Precio: </strong><?php echo $row["precio"] ?>€</p>
+                    <p><strong>De: </strong><?php echo $row["nombre"] ?></p>
+                    <a href="alquileres-alquilar2.php?id_coche=<?php echo $row['id_coche'];?>" class="button">Modificar</a>
+                    </div>
+                <?php
+                    }}
+            } else {
+                echo "<p>No se encontraron coches en la base de datos.</p>";
+            }
+            ?>
         </div>
         <div class="button-container">
-            <a href="/PracticaConcesionario/usuarios/usuarios-borrar.php" class="button">Volver atras</a>
-            <a href="/PracticaConcesionario/usuarios/usuarios-listar.php" class="button">Volver al listado</a>
+            <a href="../index.php" class="button">Volver al inicio</a>
         </div>
     </div>
 </body>
 </html>
-
