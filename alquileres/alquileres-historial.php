@@ -27,7 +27,7 @@ $sql = "SELECT
     a.prestado,
     a.devuelto
 FROM 
-    alquileres a
+    log_alquileres a
 JOIN 
     usuarios u ON a.id_usuario = u.id_usuario
 JOIN 
@@ -122,7 +122,7 @@ $result = mysqli_query($conn, $sql);
         font-size: 16px;
         border-radius: 4px;
         }
-        .alert-success {
+        .alert-success {    
         background-color: #d4edda;
         color: #155724;
         border: 1px solid #c3e6cb;
@@ -137,45 +137,7 @@ $result = mysqli_query($conn, $sql);
 <body>
     <div class="main-container">
         <div class="content">
-        <h1>Listado de alquileres</h1>
-        <?php
-            if (isset($_GET['error'])) {
-                $errorMsg = "";
-                switch ($_GET['error']) {
-                    case 1:
-                    case 2:
-                        $errorMsg = "Datos incorrectos.";
-                        break;
-                    case 3:
-                        $errorMsg = "Coche no encontrado.";
-                        break;
-                    case 4:
-                        $errorMsg = "Saldo insuficiente.";
-                        break;
-                    case 5:
-                    case 6:
-                    case 7:
-                        $errorMsg = "Fallo al procesar el alquiler.";
-                        break;
-                    default:
-                        $errorMsg = "Error desconocido.";
-                }
-                echo "<div class='alert alert-danger'>$errorMsg</div>";
-            }
-            
-            if (isset($_GET['success'])) {
-                $successMsg = "";
-                switch ($_GET['success']) {
-                    case 1:
-                        $successMsg = "Coche alquilado con éxito.";
-                        break;
-                    case 2:
-                        $successMsg = "Coche devuelto con éxito.";
-                        break;
-                }
-                echo "<div class='alert alert-success'>$successMsg</div>";
-            }
-        ?>
+        <h1>Historial de alquileres</h1>
         </div>
         <div class="alquiler-container">
         <?php
@@ -186,11 +148,10 @@ $result = mysqli_query($conn, $sql);
                 <p><strong>Usuario:</strong> <?php echo $row["nombre"] ?></p>
                 <p><strong>Coche:</strong> <?php echo $row["marca"] . ' ' . $row["modelo"] ?></p>
                 <p><strong>Fecha de prestado:</strong><br> <?php echo $row["prestado"] ?></p>
+                <p><strong>Fecha de devolución:</strong><br> <?php echo $row["devuelto"] ?></p>
                 <form action="alquiler-devolver.php" method="post">
                 <input type="hidden" name="id_alquiler" value="<?php echo $row["id_alquiler"]?>">
                 <input type="hidden" name="id_coche" value="<?php echo $row["id_coche"]?>">
-                <!-- El botón ahora es de tipo "button" para evitar el submit inmediato -->
-                <button type="button" class="button devolver-btn">Devolver</button>
                 </form>
             </div>
         <?php
@@ -204,21 +165,5 @@ $result = mysqli_query($conn, $sql);
         <a href="../index.php" class="button">Volver al inicio</a>
         </div>
     </div>
-    <script>
-        document.querySelectorAll('.devolver-btn').forEach(function(btn){
-        btn.addEventListener('click', function(){
-            var password = prompt("Por favor, ingrese su contraseña para devolver el coche:");
-            if (password !== null && password.trim() !== ""){
-            var form = this.closest("form");
-            var input = document.createElement("input");
-            input.type = "hidden";
-            input.name = "password";
-            input.value = password;
-            form.appendChild(input);
-            form.submit();
-            }
-        });
-        });
-    </script>
 </body>
 </html>

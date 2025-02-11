@@ -14,10 +14,10 @@ include '../header.view.php';
 include '../db.php';
 
 $sql = 
-"SELECT c.id_coche, c.modelo, c.marca, c.precio, c.alquilado, c.foto, c.id_usuario, u.nombre
+"SELECT c.id_coche, c.modelo, c.marca, c.precio, c.alquilado, c.foto, c.id_vendedor, u.nombre
 FROM coches c
 JOIN usuarios u
-ON c.id_usuario = u.id_usuario";
+ON c.id_vendedor = u.id_usuario";
 
 $result = mysqli_query($conn, $sql);
 ?>
@@ -127,7 +127,7 @@ $result = mysqli_query($conn, $sql);
                     <p style="font-size:20px; color:black; text-decoration:underline;"><strong><?php echo $row["marca"] . ' ' . $row["modelo"] ?></strong></p>
                     <p><strong>Precio: </strong><?php echo $row["precio"] ?>€</p>
                     <p><strong>De: </strong><?php echo $row["nombre"] ?></p>
-                    <a href="alquileres-alquilar2.php?id_coche=<?php echo $row['id_coche'];?>" class="button">Modificar</a>
+                    <a href="alquileres-alquilar2.php?id_coche=<?php echo $row['id_coche'];?>" class="button">Alquilar</a>
                     </div>
                 <?php
                     }}

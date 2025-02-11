@@ -200,6 +200,7 @@ session_start(); // Iniciar sesión
               <a href="/PracticaConcesionario/index.php">Inicio</a>
               <a href="/PracticaConcesionario/alquileres/alquileres-listar.php">Listar</a>
               <a href="/PracticaConcesionario/alquileres/alquileres-alquilar.php">Alquilar</a>
+              <a href="/PracticaConcesionario/alquileres/alquileres-historial.php">Historial</a>
             <?php 
             } 
             ?>
