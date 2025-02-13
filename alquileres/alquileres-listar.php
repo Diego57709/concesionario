@@ -4,35 +4,78 @@ if (!isset($_SESSION['id_usuario']) || !isset($_SESSION['tipo_usuario'])) {
     header("Location: /PracticaConcesionario/usuarios/usuarios-iniciar.php");
     exit();
 }
-switch ($_SESSION['tipo_usuario']) {
-    case 'vendedor':
-        header("Location: /PracticaConcesionario/index.php");
-        exit();
-}
 include '../header.view.php';
 include '../db.php';
 
 $id = $_SESSION['id_usuario'];
-$sql = "SELECT 
-    a.id_alquiler,
-    u.nombre,
-    u.apellidos,
-    u.dni,
-    c.id_coche,
-    c.modelo,
-    c.marca,
-    c.color,
-    c.precio,
-    c.foto,
-    a.prestado,
-    a.devuelto
-FROM 
-    alquileres a
-JOIN 
-    usuarios u ON a.id_usuario = u.id_usuario
-JOIN 
-    coches c ON a.id_coche = c.id_coche
-WHERE u.id_usuario = '$id'";
+$tipo_usuario = $_SESSION['tipo_usuario'];
+
+if ($tipo_usuario === 'administrador') {
+    $sql = "SELECT 
+        a.id_alquiler,
+        u.nombre AS nombre_usuario,
+        u.apellidos,
+        u.dni,
+        c.id_coche,
+        c.modelo,
+        c.marca,
+        c.color,
+        c.precio,
+        c.foto,
+        a.prestado,
+        a.devuelto
+    FROM 
+        alquileres a
+    JOIN 
+        usuarios u ON a.id_usuario = u.id_usuario
+    JOIN 
+        coches c ON a.id_coche = c.id_coche";
+} elseif ($tipo_usuario === 'vendedor') {
+    $sql = "SELECT 
+        a.id_alquiler,
+        u.nombre AS nombre_usuario,
+        u.apellidos,
+        u.dni,
+        c.id_coche,
+        c.modelo,
+        c.marca,
+        c.color,
+        c.precio,
+        c.foto,
+        a.prestado,
+        a.devuelto
+    FROM 
+        alquileres a
+    JOIN 
+        usuarios u ON a.id_usuario = u.id_usuario
+    JOIN 
+        coches c ON a.id_coche = c.id_coche
+    WHERE 
+        c.id_vendedor = '$id'";
+} else {
+    $sql = "SELECT 
+        a.id_alquiler,
+        u.nombre AS nombre_usuario,
+        u.apellidos,
+        u.dni,
+        c.id_coche,
+        c.modelo,
+        c.marca,
+        c.color,
+        c.precio,
+        c.foto,
+        a.prestado,
+        a.devuelto
+    FROM 
+        alquileres a
+    JOIN 
+        usuarios u ON a.id_usuario = u.id_usuario
+    JOIN 
+        coches c ON a.id_coche = c.id_coche
+    WHERE 
+        a.id_usuario = '$id'";
+}
+
 $result = mysqli_query($conn, $sql);
 ?>
 <!DOCTYPE html>
@@ -122,7 +165,7 @@ $result = mysqli_query($conn, $sql);
         font-size: 16px;
         border-radius: 4px;
         }
-        .alert-success {
+        .alert-success {    
         background-color: #d4edda;
         color: #155724;
         border: 1px solid #c3e6cb;
@@ -183,14 +226,16 @@ $result = mysqli_query($conn, $sql);
             while($row = mysqli_fetch_assoc($result)) { ?>
             <div class="alquiler-box">
                 <img src="/PracticaConcesionario/coches/img/<?php echo $row['foto']?>" alt="Imagen del coche">
-                <p><strong>Usuario:</strong> <?php echo $row["nombre"] ?></p>
+                <p><strong>Usuario:</strong> <?php echo $row["nombre_usuario"] ?></p>
                 <p><strong>Coche:</strong> <?php echo $row["marca"] . ' ' . $row["modelo"] ?></p>
                 <p><strong>Fecha de prestado:</strong><br> <?php echo $row["prestado"] ?></p>
                 <form action="alquiler-devolver.php" method="post">
                 <input type="hidden" name="id_alquiler" value="<?php echo $row["id_alquiler"]?>">
                 <input type="hidden" name="id_coche" value="<?php echo $row["id_coche"]?>">
                 <!-- El botón ahora es de tipo "button" para evitar el submit inmediato -->
+                <?php if (!($tipo_usuario == 'vendedor')) {?>
                 <button type="button" class="button devolver-btn">Devolver</button>
+                <?php } ?>
                 </form>
             </div>
         <?php

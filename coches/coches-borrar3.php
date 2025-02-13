@@ -41,6 +41,7 @@ $sql2 = "DELETE FROM coches WHERE id_coche = $id_coche";
     <title>Document</title>
     <style>
         body {
+            background: linear-gradient(to right, #141E30, #243B55);
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             color: #333;

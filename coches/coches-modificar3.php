@@ -5,16 +5,15 @@ if (!isset($_SESSION['id_usuario']) || !isset($_SESSION['tipo_usuario'])) {
     exit();
 }
 switch ($_SESSION['tipo_usuario']) {
-    case 'vendedor':
-        header("Location: /PracticaConcesionario/index.php");
-        exit();
     case 'comprador':
         header("Location: /PracticaConcesionario/index.php");
         exit();
 }
 include '../header.view.php';
-
 include '../db.php';
+
+$tipo = $_SESSION['id_usuario'];
+
 $id_coche = $_REQUEST['id_coche'];
 $sql = "SELECT * FROM coches WHERE id_coche = '$id_coche'";
 $result = mysqli_query($conn, $sql);
@@ -28,6 +27,7 @@ $result = mysqli_query($conn, $sql);
     <title>Document</title>
     <style>
         body {
+            background: linear-gradient(to right, #141E30, #243B55);
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             color: #333;
@@ -185,7 +185,9 @@ $result = mysqli_query($conn, $sql);
                                     </div></h3>
                                 <p><strong>Precio:</strong> <input type="text" name="precio" id="precio" value="<?php echo $row['precio']; ?>"> €</p>
                                 <p><strong>Color:</strong> <input type="text" name="color" id="color" value="<?php echo $row['color']; ?>"></p>
-                                <p><strong>Alquilado:</strong> <input type="radio" name="alquilado" id="alquilado" <?php echo $row['alquilado'] ? 'checked' : ''; ?>></p>
+                                <?php if ($tipo == 'administrador') { ?>
+                                    <p><strong>Alquilado:</strong> <input type="radio" name="alquilado" id="alquilado" <?php echo $row['alquilado'] ? 'checked' : ''; ?>></p>
+                                <?php } ?>
                             </div>
                         <?php 
                         } 

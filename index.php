@@ -92,7 +92,7 @@ session_start();
         <!-- Quick Buttons -->
         <div class="quick-buttons">
             <?php if (($_SESSION['tipo_usuario']) == "vendedor"):?>
-                <a href='/PracticaConcesionario/alquileres/alquileres-anadir.php' class='button'>Alquilar tu coche</a>
+                <a href='/PracticaConcesionario/coches/coches-anadir.php' class='button'>Alquilar tu coche</a>
             <?php endif; ?>
             <?php if (($_SESSION['tipo_usuario']) == "comprador"):?>
                 <a href='/PracticaConcesionario/alquileres/alquileres-alquilar.php' class='button'>Alquilar un coche</a>

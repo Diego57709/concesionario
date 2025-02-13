@@ -5,9 +5,6 @@ if (!isset($_SESSION['id_usuario']) || !isset($_SESSION['tipo_usuario'])) {
     exit();
 }
 switch ($_SESSION['tipo_usuario']) {
-    case 'vendedor':
-        header("Location: /PracticaConcesionario/index.php");
-        exit();
     case 'comprador':
         header("Location: /PracticaConcesionario/index.php");
         exit();
@@ -22,7 +19,7 @@ $result1 = mysqli_query($conn, $sql1);
 if ($result1 && mysqli_num_rows($result1) > 0) {
     $row1 = mysqli_fetch_assoc($result1);
     $nombre_modelo = $row1['modelo'];
-    $foto = $row1['foto'];
+    $foto_actual = $row1['foto'];
 }
 
 $modelo = $_REQUEST['modelo'] ?? '';
@@ -30,12 +27,16 @@ $marca = $_REQUEST['marca'] ?? '';
 $color = $_REQUEST['color'] ?? '';
 $precio = $_REQUEST['precio'] ?? '';
 $alquilado = $_REQUEST['alquilado'] ?? '';
-$foto = $row1['foto'];
-if (isset($_FILES['foto'])){
+$foto = $foto_actual;
+if (!empty($_FILES['foto']['name'])) { 
     $file = $_FILES['foto'];
     $foto = basename($file['name']);
     $uploadPath = "img/$foto";
-    move_uploaded_file($file['tmp_name'], $uploadPath);
+    
+    if (move_uploaded_file($file['tmp_name'], $uploadPath)) {
+    } else {
+        $foto = $foto_actual;
+    }
 }
 
 $sql2 = "UPDATE coches SET 
@@ -56,6 +57,7 @@ $sql2 = "UPDATE coches SET
     <title>Document</title>
     <style>
         body {
+            background: linear-gradient(to right, #141E30, #243B55);
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             color: #333;
@@ -127,7 +129,7 @@ $sql2 = "UPDATE coches SET
                 if (mysqli_query($conn, $sql2)) {
                     echo "Coche, ".$nombre_modelo." modificado correctamente";
                     ?><div class="button-container">
-                    <a href="/PracticaConcesionario/coches/coches-modificar.php" class="button">Volver atras</a>
+                    <a href="/PracticaConcesionario/coches/coches-listar.php" class="button">Volver atras</a>
                 </div><?php
                 } else {
                     echo "Error al modificar el coche:  ".$nombre_modelo ."";

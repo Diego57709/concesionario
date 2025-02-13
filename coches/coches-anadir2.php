@@ -5,15 +5,13 @@ if (!isset($_SESSION['id_usuario']) || !isset($_SESSION['tipo_usuario'])) {
     exit();
 }
 switch ($_SESSION['tipo_usuario']) {
-    case 'vendedor':
-        header("Location: /PracticaConcesionario/index.php");
-        exit();
     case 'comprador':
         header("Location: /PracticaConcesionario/index.php");
         exit();
 }
 include '../header.view.php';
 $error = "";
+$id_vendedor = $_SESSION['id_usuario'];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['foto'])) {
     // Obtener datos del formulario
@@ -45,8 +43,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['foto'])) {
             $conn = mysqli_connect('localhost', 'root', 'rootroot', 'concesionario') 
                 or die("Error al conectar a la base de datos: " . mysqli_connect_error());
 
-            $sql = "INSERT INTO coches(modelo, marca, color, precio, alquilado, foto) 
-                    VALUES ('$modelo', '$marca', '$color', '$precio', '$alquilado', '$foto')";
+            $sql = "INSERT INTO coches(modelo, marca, color, precio, alquilado, foto, id_vendedor) 
+                    VALUES ('$modelo', '$marca', '$color', '$precio', '$alquilado', '$foto', $id_vendedor)";
 
             if (mysqli_query($conn, $sql)) {
                 echo "Coche añadido correctamente.";
@@ -145,9 +143,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['foto'])) {
 <body>
     <div class="main-container">
         <div class="content">
-            <h1>Añadir coches</h1>
-            <h3><?php echo "$modelo $marca añadido correctamente"; echo $error;?></h3>
-        </div>
+        <h1>Añadir coches</h1>
+        <?php if (!empty($error)) { ?>
+            <h3><?php echo $error; ?></h3>
+        <?php } elseif (!empty($modelo) && !empty($marca)) { ?>
+            <h3><?php echo "$modelo $marca añadido correctamente"; ?></h3>
+        <?php } ?>
+    </div>
     </div>
 </body>
 </html>

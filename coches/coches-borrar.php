@@ -20,6 +20,9 @@ switch ($_SESSION['tipo_usuario']) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
+        body {
+            background: linear-gradient(to right, #141E30, #243B55);
+        }
         .main-container {
             margin-top: 20px;
             display: flex;

@@ -5,13 +5,11 @@ if (!isset($_SESSION['id_usuario']) || !isset($_SESSION['tipo_usuario'])) {
     exit();
 }
 switch ($_SESSION['tipo_usuario']) {
-    case 'vendedor':
-        header("Location: /PracticaConcesionario/index.php");
-        exit();
     case 'comprador':
         header("Location: /PracticaConcesionario/index.php");
         exit();
 }
+$tipo = $_SESSION['id_usuario'];
 include '../header.view.php';
 ?>
 <!DOCTYPE html>
@@ -107,12 +105,12 @@ include '../header.view.php';
 
                 <label for="precio">Precio:</label>
                 <input type="text" id="precio" name="precio" required>
-
+                <?php if ($tipo == 'administrador') { ?>
                 <div>
                     <label for="alquilado">Alquilado</label><br><br>
                     <input type="checkbox" id="alquilado" name="alquilado">
                 </div>
-
+                <?php } ?>
                 <label for="foto">Foto:</label>
                 <input type="file" id="foto" name="foto" accept="image/*" required>
 
@@ -125,27 +123,5 @@ include '../header.view.php';
 </html>
 
 <?php
-/*
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['image'])) {
-        $modelo = $_REQUEST['modelo'];
-        $marca = $_REQUEST['marca'];
-        $color = $_REQUEST['color'];
-        $precio = $_REQUEST['precio'];
-        $precio = $_REQUEST['precio'];
-        $alquilado = isset($_REQUEST['alquilado']) ? 1 : 0;
-        $foto = $_REQUEST['foto'];
-
-        $conn = mysqli_connect('localhost', 'root', 'rootroot', 'concesionario') 
-            or die ("Fallo accediendo:" . mysqli_connect_error());
-
-        $sql = "INSERT INTO coches(modelo, marca, color, precio, alquilado, foto) VALUES ('$modelo', '$marca', '$color', '$precio', '$alquilado', '$foto')";
-
-        mysqli_query($conn, $sql)
-            or die ("Error al insertar los datos". mysqli_error($conn));
-        
-
-
-        mysqli_close($conn);
-}*/
 ?>
 

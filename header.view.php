@@ -6,7 +6,6 @@ session_start(); // Iniciar sesión
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Menú Principal</title>
   <style>
     body {
       font-family: 'Arial', sans-serif;
@@ -103,7 +102,8 @@ session_start(); // Iniciar sesión
 </head>
 <body>
   <header>
-    <h1>Hola, <?php echo $nombre = $_SESSION['nombre'] ? $_SESSION['nombre'] : "Invitado";?>!</h1>
+    <a href='/PracticaConcesionario/index.php' style="color:white; text-decoration:none;" ><h1>Hola, <?php echo $nombre = $_SESSION['nombre'] ? $_SESSION['nombre'] : "Invitado";?>!</h1></a>
+  
     <nav>
       <div class="dropdown">
         <a href="#">Coches</a>
@@ -131,7 +131,7 @@ session_start(); // Iniciar sesión
               <a href="/PracticaConcesionario/coches/coches-anadir.php">Añadir</a>
               <a href="/PracticaConcesionario/coches/coches-listar.php">Listar</a>
               <a href="/PracticaConcesionario/coches/coches-buscar.php">Buscar</a>
-              <a href="/PracticaConcesionario/coches/coches-modificar.php">Modificar</a>
+              <a href="/PracticaConcesionario/coches/coches-modificar2.php">Modificar</a>
             <?php 
             } elseif ($tipo == 'comprador') { ?>
               <a href="/PracticaConcesionario/index.php">Inicio</a>
@@ -156,7 +156,6 @@ session_start(); // Iniciar sesión
           <?php 
           } else {
             $tipo = $_SESSION['tipo_usuario'];
-            // Solo el administrador puede gestionar usuarios
             if ($tipo == 'administrador') { ?>
               <a href="/PracticaConcesionario/usuarios/usuarios-anadir.php">Añadir</a>
               <a href="/PracticaConcesionario/usuarios/usuarios-listar.php">Listar</a>
@@ -173,7 +172,7 @@ session_start(); // Iniciar sesión
             } 
             ?>
             <?php } ?>
-            <a href="/PracticaConcesionario/usuarios/usuarios-cerrar.php" class="session-button">Cerrar sesión</a>
+            <a href="/PracticaConcesionario/usuarios/usuarios-cerrar.php">Cerrar sesión</a>
           <?php 
           ?>
         </div>
@@ -194,7 +193,6 @@ session_start(); // Iniciar sesión
             } elseif ($tipo == 'vendedor') { ?>
               <a href="/PracticaConcesionario/index.php">Inicio</a>
               <a href="/PracticaConcesionario/alquileres/alquileres-listar.php">Listar</a>
-              <a href="/PracticaConcesionario/alquileres/alquileres-anadir.php">Añadir</a>
             <?php 
             } elseif ($tipo == 'comprador') { ?>
               <a href="/PracticaConcesionario/index.php">Inicio</a>

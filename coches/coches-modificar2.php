@@ -5,9 +5,6 @@ if (!isset($_SESSION['id_usuario']) || !isset($_SESSION['tipo_usuario'])) {
     exit();
 }
 switch ($_SESSION['tipo_usuario']) {
-    case 'vendedor':
-        header("Location: /PracticaConcesionario/index.php");
-        exit();
     case 'comprador':
         header("Location: /PracticaConcesionario/index.php");
         exit();
@@ -23,7 +20,7 @@ $id_usuario = $_SESSION['id_usuario'];
 $alquilado = isset($_REQUEST['alquilado']) ? 1 : 0;
 
 include '../db.php';
-    $sql = "SELECT * FROM coches WHERE 1=1 AND id_usuario = '$id_usuario'";
+    $sql = "SELECT * FROM coches WHERE 1=1 AND id_vendedor = '$id_usuario'";
     
     if ($modelo) {
         $sql.= " AND modelo LIKE '%$modelo%'";
@@ -57,6 +54,7 @@ include '../db.php';
     <title>Document</title>
     <style>
         body {
+            background: linear-gradient(to right, #141E30, #243B55);
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             color: #333;
