@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['id_usuario']) || !isset($_SESSION['tipo_usuario'])) {
-    header("Location: /PracticaConcesionario/usuarios/usuarios-iniciar.php"); // Redirigir al login si no está autenticado
+    header("Location: /PracticaConcesionario/usuarios/usuarios-iniciar.php");
     exit();
 }
 

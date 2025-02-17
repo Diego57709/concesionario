@@ -4,8 +4,6 @@ if (!isset($_SESSION['id_usuario']) || !isset($_SESSION['tipo_usuario'])) {
     header("Location: /PracticaConcesionario/usuarios/usuarios-iniciar.php");
     exit();
 }
-
-// Redirección según el tipo de usuario
 switch ($_SESSION['tipo_usuario']) {
     case 'vendedor':
         header("Location: /PracticaConcesionario/index.php");

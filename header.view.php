@@ -172,7 +172,6 @@ session_start(); // Iniciar sesión
             } 
             ?>
             <?php } ?>
-            <a href="/PracticaConcesionario/usuarios/usuarios-cerrar.php">Cerrar sesión</a>
           <?php 
           ?>
         </div>
