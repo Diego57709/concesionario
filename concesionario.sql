@@ -47,11 +47,19 @@ INSERT INTO `alquileres` (`id_alquiler`, `id_usuario`, `id_coche`, `prestado`, `
 -- Disparadores `alquileres`
 --
 DELIMITER $$
+<<<<<<< HEAD
 CREATE TRIGGER `trg_alquiler_devolver` AFTER UPDATE ON `alquileres` FOR EACH ROW BEGIN
   IF NEW.devuelto IS NOT NULL AND OLD.devuelto IS NULL THEN
     INSERT INTO log_alquileres (id_alquiler, id_usuario, id_coche, prestado, devuelto)
     VALUES (OLD.id_alquiler, OLD.id_usuario, OLD.id_coche, OLD.prestado, NEW.devuelto);
   END IF;
+=======
+CREATE TRIGGER `trg_alquiler_devolver` AFTER UPDATE ON `alquileres` FOR EACH ROW BEGIN
+  IF NEW.devuelto IS NOT NULL AND OLD.devuelto IS NULL THEN
+    INSERT INTO log_alquileres (id_alquiler, id_usuario, id_coche, prestado, devuelto)
+    VALUES (OLD.id_alquiler, OLD.id_usuario, OLD.id_coche, OLD.prestado, NEW.devuelto);
+  END IF;
+>>>>>>> 05e5d30b074458d84d0124b96386c021e7c7c2e5
 END
 $$
 DELIMITER ;

@@ -21,7 +21,6 @@ $id_alquiler = $_POST['id_alquiler'];
 $id_coche    = $_POST['id_coche'];
 $password    = $_POST['password'];
 
-// Verificar usuario y contraseña
 $sqlUser = "SELECT password FROM usuarios WHERE id_usuario = '$id_usuario'";
 $resultUser = mysqli_query($conn, $sqlUser);
 if (!$resultUser || mysqli_num_rows($resultUser) == 0) {
@@ -34,21 +33,21 @@ if (!password_verify($password, $user['password'])) {
     header("Location: alquileres-listar.php?error=2");
 }
 
-// Marcar el alquiler como devuelto (esto activará el trigger)
+// Marcar el alquiler como devuelto 
 $sqlUpdateAlquiler = "UPDATE alquileres SET devuelto = NOW() WHERE id_alquiler = '$id_alquiler' AND id_usuario = '$id_usuario'";
 if (!mysqli_query($conn, $sqlUpdateAlquiler)) {
     header("Location: alquileres-listar.php?error=5");
     exit();
 }
 
-// Eliminar el alquiler (el trigger ya lo registra en `log_alquileres`)
+// Eliminar el alquiler
 $sqlDeleteAlquiler = "DELETE FROM alquileres WHERE id_alquiler = '$id_alquiler'";
 if (!mysqli_query($conn, $sqlDeleteAlquiler)) {
     header("Location: alquileres-listar.php?error=6");
     exit();
 }
 
-// Actualizar estado del coche para que esté disponible
+// Actualizar el coche para que se peuda alquilar
 $sqlUpdateCoche = "UPDATE coches SET alquilado = 0 WHERE id_coche = '$id_coche'";
 if (!mysqli_query($conn, $sqlUpdateCoche)) {
     header("Location: alquileres-listar.php?error=7");

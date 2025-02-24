@@ -2,7 +2,6 @@
 session_start();
 include '../db.php';
 
-// Verificar si hay sesión y bloquear a vendedores
 if (!isset($_SESSION['id_usuario']) || !isset($_SESSION['tipo_usuario'])) {
     header("Location: /PracticaConcesionario/usuarios/usuarios-iniciar.php");
     exit();
@@ -17,7 +16,6 @@ $id_usuario = $_SESSION['id_usuario'];
 $id_coche = $_POST['id_coche'];
 $password = $_POST['password'];
 
-// Verificar usuario y obtener datos
 $sqlUser = "SELECT id_usuario, nombre, apellidos, dni, saldo, tipo_usuario, password FROM usuarios WHERE id_usuario = '$id_usuario'";
 $resultUser = mysqli_query($conn, $sqlUser);
 $user = mysqli_fetch_assoc($resultUser);
@@ -59,14 +57,14 @@ if (!mysqli_query($conn, $sqlInsert)) {
     exit();
 }
 
-// Actualizar saldo del comprador
+// Actualizar el dinero del comprador
 $sqlUpdateSaldoComprador = "UPDATE usuarios SET saldo = '$saldo_restante' WHERE id_usuario = '$id_usuario'";
 if (!mysqli_query($conn, $sqlUpdateSaldoComprador)) {
     header("Location: alquileres-alquilar2.php?error=6&id_coche=$id_coche");
     exit();
 }
 
-// Actualizar saldo del vendedor (suma el precio del coche al saldo del vendedor)
+// Actualizar dinero del vendedor
 $sqlUpdateSaldoVendedor = "UPDATE usuarios SET saldo = saldo + '$precio_coche' WHERE id_usuario = '$id_vendedor'";
 if (!mysqli_query($conn, $sqlUpdateSaldoVendedor)) {
     header("Location: alquileres-alquilar2.php?error=7&id_coche=$id_coche");

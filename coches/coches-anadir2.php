@@ -37,9 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['foto'])) {
     if (file_exists($uploadPath)) {
         $error = "El archivo ya existe.";
     } else {
-        // Mover el archivo al directorio de destino
         if (move_uploaded_file($file['tmp_name'], $uploadPath)) {
-            // Insertar en la base de datos
             $conn = mysqli_connect('localhost', 'root', 'rootroot', 'concesionario') 
                 or die("Error al conectar a la base de datos: " . mysqli_connect_error());
 
